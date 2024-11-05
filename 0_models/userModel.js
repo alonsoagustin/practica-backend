@@ -28,6 +28,16 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please provide your password'],
     minlength: [8, 'A password must have at least 8 characters'],
   },
+  passwordConfirm: {
+    type: String,
+    required: [true, ' Please confirm your password'],
+    validate: {
+      //This only works on CREATE and SAVE
+      validator: function (element) {
+        return element === this.password;
+      },
+    },
+  },
 });
 
 // Create a user model based on the defined schema, which allows interaction with the 'users' collection in MongoDB.
