@@ -7,6 +7,9 @@ const userRouter = require('./3_routes/userRoute');
 // Create an instance of an Express application
 const app = express();
 
+// Middleware to parse incoming JSON requests
+app.use(express.json());
+
 // Routes
 // Define the routes for user-related operations
 app.use('/users', userRouter);
