@@ -43,6 +43,24 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// 'pre' middleware that runs before saving a user
+userSchema.pre('save', async function (next) {
+  // Check if the 'password' field has been modified
+  // If it hasn't been modified, skip the hashing process and continue with the operation
+  if (!this.isModified('password')) return next();
+
+  // If the password has been modified, hash it using bcrypt
+  // A salt of 12 rounds is used for the hashing operation
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // Remove the 'passwordConfirm' field from the document before saving
+  // This ensures that the password confirmation field is not stored in the database
+  this.passwordConfirm = undefined;
+
+  // Call 'next()' to allow the save operation to proceed
+  next();
+});
+
 // Create a user model based on the defined schema, which allows interaction with the 'users' collection in MongoDB.
 const User = mongoose.model('User', userSchema);
 
