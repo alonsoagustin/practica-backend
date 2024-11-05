@@ -4,7 +4,7 @@
   "description": "\"A website for buying and selling used products.\"",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "Agustin Alonso",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "prettier": "^3.3.3"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongoose": "^8.8.0",
     "validator": "^13.12.0"

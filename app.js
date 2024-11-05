@@ -1,15 +1,8 @@
+// Import the Express library
 const express = require('express');
 
+// Create an instance of an Express application
 const app = express();
 
-const port = 3000;
-
-app.get('/', (req, res) => {
-  res
-    .status(200)
-    .json({ message: 'Hello from the server side!', app: 'Nodepop' });
-});
-
-app.listen(port, () => {
-  console.log(`App running on port: ${port}...`);
-});
+// Export the Express application for use in other modules
+module.exports = app;
