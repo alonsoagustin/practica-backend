@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 // Import the validator library for validating data
 const validator = require('validator');
 
+// Import the bcryptjs library for hashing passwords securely
+const bcrypt = require('bcryptjs');
+
 // Define the user schema using Mongoose
 const userSchema = new mongoose.Schema({
   name: {
