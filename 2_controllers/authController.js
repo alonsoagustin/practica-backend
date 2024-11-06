@@ -4,7 +4,12 @@ const User = require('./../0_models/userModel');
 exports.signup = async (req, res, next) => {
   try {
     // Create a new user based on the request body
-    const newUser = await User.create(req.body);
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+    });
 
     // Respond with a success status and the newly created user
     res.status(201).json({
