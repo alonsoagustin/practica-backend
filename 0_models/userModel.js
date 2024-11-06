@@ -61,6 +61,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// Method to compare a provided password with the user's hashed password in the database
+userSchema.methods.comparePassword = async function (clearPassword) {
+  // Using bcrypt to securely compare the passwords
+  return await bcrypt.compare(clearPassword, this.password);
+};
+
 // Create a user model based on the defined schema, which allows interaction with the 'users' collection in MongoDB.
 const User = mongoose.model('User', userSchema);
 
