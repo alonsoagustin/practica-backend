@@ -4,6 +4,9 @@ const express = require('express');
 // Import the 'express-session' module to handle session management
 const session = require('express-session');
 
+// Import the connect-mongo library to create a session store with MongoDB
+const MongoStore = require('connect-mongo');
+
 // Import the user route module
 const userRouter = require('./3_routes/userRoute');
 
@@ -29,7 +32,13 @@ app.use(
     resave: false,
 
     // Sets the maximum age for the session cookie, after which it will expire
-    cookie: { maxAge: process.env.SESSION_EXPIRATION },
+    cookie: { maxAge: Number(process.env.SESSION_EXPIRATION) },
+
+    // The session data will be saved in MongoDB database
+    store: MongoStore.create({
+      // using the connection URL from the environment variable
+      mongoUrl: process.env.DATABASE,
+    }),
   }),
 );
 
