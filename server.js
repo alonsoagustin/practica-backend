@@ -1,17 +1,14 @@
 // Import the required libraries
 const mongoose = require('mongoose'); // Mongoose for MongoDB interactions
 const dotenv = require('dotenv'); // dotenv to manage environment variables
-const app = require('./app'); // Import the main application module
-
 // Use the "dotenv" library to load environment variables from the "config.env" file
 dotenv.config({ path: './config.env' });
 
-// Construct the database connection URI by replacing <PASSWORD> with the actual password from environment variables
-const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+const app = require('./app'); // Import the main application module
 
 // Connect to the MongoDB database using Mongoose
 mongoose
-  .connect(DB)
+  .connect(process.env.DATABASE)
   .then(() => console.log('DB connection successful'))
   .catch(() => console.log('Error connecting to DB', err));
 
