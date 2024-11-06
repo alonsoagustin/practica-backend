@@ -63,3 +63,21 @@ exports.login = async (req, res, next) => {
     });
   }
 };
+
+exports.logout = (req, res, next) => {
+  // Check if the user is logged in by verifying the existence of userID in session
+  if (!req.session.userID) {
+    // If no session exists, respond with an error message
+    return res.status(400).json({ status: 'Fail', message: 'No active session to logout from' });
+  }
+
+  // Regenerate the session to ensure that the old session is completely invalidated
+  req.session.regenerate((err) => {
+    if (err) {
+      // If there was an error regenerating the session, return a failure response
+      return res.status(500).json({ status: 'Fail', message: 'Session regeneration failed' });
+    }
+    // Respond with success once the session is successfully regenerated
+    res.status(200).json({ status: 'Success', message: 'Logged out successfully' });
+  });
+};
