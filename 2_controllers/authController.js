@@ -11,6 +11,9 @@ exports.signup = async (req, res, next) => {
       passwordConfirm: req.body.passwordConfirm,
     });
 
+    req.session.userID = newUser._id;
+    req.session.userName = newUser.name;
+
     // Respond with a success status and the newly created user
     res.status(201).json({
       status: 'success',
