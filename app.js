@@ -10,6 +10,9 @@ const MongoStore = require('connect-mongo');
 // Import the user route module
 const userRouter = require('./3_routes/userRoute');
 
+// Import the product route module
+const productRouter = require('./3_routes/productRoute');
+
 // Create an instance of an Express application
 const app = express();
 
@@ -43,8 +46,11 @@ app.use(
 );
 
 // Routes
-// Define the routes for user-related operations
+// Set up the '/users' endpoint to handle all user-related requests using userRouter
 app.use('/users', userRouter);
+
+// Set up the '/products' endpoint to handle all product-related requests using productRouter
+app.use('/products', productRouter);
 
 // Export the Express application for use in other modules
 module.exports = app;
