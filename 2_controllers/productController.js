@@ -13,6 +13,7 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
+// Middleware to create a product for a specific user
 exports.createProduct = async (req, res, next) => {
   try {
     // Extract product details from request body
@@ -58,4 +59,37 @@ exports.checkAuth = async (req, res, next) => {
 
   // If the user is logged in, continue to the next middleware or route handler
   next();
+};
+
+// Middleware to check if the user is the owner of a specific product
+exports.checkProductOwnership = async (req, res, next) => {
+  try {
+    const userID = req.session.userID;
+    const productID = req.params.productId;
+
+    // Find the product by ID
+    const product = await Product.findOne({ _id: productID });
+
+    // If the product is not found, log a warning and return a 404 error
+    if (!product) {
+      console.warn(`WARNING - user: ${userID} is trying to delete product: ${productID}`);
+      return res.status(404).json({ status: 'Fail', message: 'Product not found' });
+    }
+
+    // Check if the product owner matches the logged-in user
+    if (product.owner.toString() !== userID) {
+      console.warn(`WARNING - user: ${userID} is trying to delete product: ${productID}`);
+      return res.status(401).json({
+        status: 'Fail',
+        message: 'You are not the owner of this product',
+      });
+    }
+    // Proceed if the ownership check passed
+    next();
+  } catch (error) {
+    res.status(500).json({
+      status: 'Fail',
+      message: error.message,
+    });
+  }
 };
