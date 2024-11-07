@@ -47,6 +47,21 @@ exports.createProduct = async (req, res, next) => {
   }
 };
 
+// Middleware to delete a product by ID
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    // Extract the product ID from the request parameters
+    const productID = req.params.productId;
+    // Attempt to delete the product from the database using the product ID
+    await Product.deleteOne({ _id: productID });
+    // Send a success response if the product was successfully deleted
+    res.status(200).json({ status: 'Success', message: 'Product deleted' });
+  } catch (error) {
+    // Handle any errors that occur during deletion and send a failure response
+    res.status(500).json({ status: 'Fail', message: error.message });
+  }
+};
+
 // Middleware to check if the user is logged in
 exports.checkAuth = async (req, res, next) => {
   // If the user is not logged in (userID is not in session)
