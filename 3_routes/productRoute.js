@@ -8,4 +8,8 @@ router
   .get(productController.checkAuth, productController.getProducts)
   .post(productController.checkAuth, productController.createProduct);
 
+router
+  .route('/delete/:productId')
+  .get(productController.checkAuth, productController.checkProductOwnership, productController.deleteProduct);
+
 module.exports = router;
