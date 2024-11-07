@@ -7,6 +7,9 @@ const session = require('express-session');
 // Import the connect-mongo library to create a session store with MongoDB
 const MongoStore = require('connect-mongo');
 
+// Import the morgan library to log all requests made to the server in the Express application.
+const logger = require('morgan');
+
 // Import the user route module
 const userRouter = require('./3_routes/userRoute');
 
@@ -15,6 +18,9 @@ const productRouter = require('./3_routes/productRoute');
 
 // Create an instance of an Express application
 const app = express();
+
+// Global middleware that generates detailed logs of HTTP requests
+app.use(logger('dev'));
 
 // Global Middleware to parse incoming JSON requests
 app.use(express.json());
