@@ -13,6 +13,39 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
+exports.createProduct = async (req, res, next) => {
+  try {
+    // Extract product details from request body
+    const { name, description, price, image, tags } = req.body;
+
+    // Check that required fields are present; return an error if any are missing
+    if (!name || !description || !price || !image) {
+      return res
+        .status(400)
+        .json({ status: 'Fail', message: 'Name, description, price and image are required fields' });
+    }
+    // Create a new product in the database with the specified fields
+    // Associate the product with the current user's ID as the owner
+    const newProduct = await Product.create({
+      name,
+      description,
+      price,
+      owner: req.session.userID,
+      image,
+      tags,
+    });
+
+    // Send a success response with the created product data
+    res.status(201).json({
+      status: 'Success',
+      data: newProduct,
+    });
+  } catch (error) {
+    // Handle any errors that occur during product creation and send an error response
+    res.status(500).json({ status: 'Fail', message: `Error creating product:${error.message}` });
+  }
+};
+
 // Middleware to check if the user is logged in
 exports.checkAuth = async (req, res, next) => {
   // If the user is not logged in (userID is not in session)
