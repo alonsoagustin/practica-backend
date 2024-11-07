@@ -8,13 +8,13 @@ const authController = require('./../2_controllers/authController');
 const router = express.Router();
 
 // Define a POST route for user signup that triggers the signup method in the authController
-router.post('/signup', authController.signup);
+router.route('/signup').post(authController.signup);
 
 // Define a POST route for user login that triggers the login method in the authController
-router.post('/login', authController.login);
+router.route('/login').post(authController.login);
 
 /// Handle all HTTP methods for the '/logout' route, delegating to the logout middleware
-router.all('/logout', authController.logout);
+router.route('/logout').all(authController.logout);
 
 // Export the router for use in other modules
 module.exports = router;
