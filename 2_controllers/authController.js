@@ -18,6 +18,7 @@ exports.signup = async (req, res, next) => {
     // Respond with a success status and the newly created user
     res.status(201).json({
       status: 'success',
+      message: `Welcome ${newUser.name}`,
       data: {
         user: newUser,
       },
@@ -54,7 +55,7 @@ exports.login = async (req, res, next) => {
     req.session.userName = user.name;
 
     // Send a successful response
-    res.status(200).json({ status: 'success' });
+    res.status(200).json({ status: 'success', message: `Welcome back ${user.name}` });
   } catch (error) {
     // Handle errors, such as validation errors
     res.status(401).json({
@@ -78,6 +79,6 @@ exports.logout = (req, res, next) => {
       return res.status(500).json({ status: 'Fail', message: 'Session regeneration failed' });
     }
     // Respond with success once the session is successfully regenerated
-    res.status(200).json({ status: 'Success', message: 'Logged out successfully' });
+    res.status(200).json({ status: 'Success', message: 'We hope to see you again soon' });
   });
 };
