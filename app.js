@@ -19,6 +19,12 @@ const productRouter = require('./3_routes/productRoute');
 // Create an instance of an Express application
 const app = express();
 
+// Set the directory where the application's view templates are stored
+app.set('views', 'views');
+
+// Set the view engine to EJS, allowing the app to render .ejs template files
+app.set('view engine', 'ejs');
+
 // Global middleware that generates detailed logs of HTTP requests
 app.use(logger('dev'));
 
