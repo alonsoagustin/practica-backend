@@ -32,6 +32,10 @@ app.set('views', path.join(__dirname, '1_views'));
 // Set the view engine to EJS, allowing the app to render .ejs template files
 app.set('view engine', 'ejs');
 
+// Serves static files from the 'public' directory, making them accessible from the web
+// The 'path.join' method ensures the correct path format, combining the current directory (__dirname) with 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Global middleware that generates detailed logs of HTTP requests
 app.use(logger('dev'));
 
