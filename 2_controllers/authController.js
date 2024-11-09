@@ -16,13 +16,16 @@ exports.signup = async (req, res, next) => {
     req.session.userName = newUser.name;
 
     // Respond with a success status and the newly created user
-    res.status(201).json({
-      status: 'success',
-      message: `Welcome ${newUser.name}`,
-      data: {
-        user: newUser,
-      },
-    });
+    // res.status(201).json({
+    //   status: 'success',
+    //   message: `Welcome ${newUser.name}`,
+    //   data: {
+    //     user: newUser,
+    //   },
+    // });
+
+    //
+    res.redirect('/');
   } catch (error) {
     // Handle errors, such as validation errors
     res.status(400).json({
@@ -55,7 +58,10 @@ exports.login = async (req, res, next) => {
     req.session.userName = user.name;
 
     // Send a successful response
-    res.status(200).json({ status: 'success', message: `Welcome back ${user.name}` });
+    // res.status(200).json({ status: 'success', message: `Welcome back ${user.name}` });
+
+    // Redirects the user to the home page ('/')
+    res.redirect('/');
   } catch (error) {
     // Handle errors, such as validation errors
     res.status(401).json({
@@ -78,7 +84,11 @@ exports.logout = (req, res, next) => {
       // If there was an error regenerating the session, return a failure response
       return res.status(500).json({ status: 'Fail', message: 'Session regeneration failed' });
     }
+
     // Respond with success once the session is successfully regenerated
-    res.status(200).json({ status: 'Success', message: 'We hope to see you again soon' });
+    // res.status(200).json({ status: 'Success', message: 'We hope to see you again soon' });
+
+    // Redirects the user to the home page ('/')
+    res.redirect('/');
   });
 };
