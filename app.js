@@ -42,6 +42,10 @@ app.use(logger('dev'));
 // Global Middleware to parse incoming JSON requests
 app.use(express.json());
 
+// Global Middleware to parse incoming requests with URL-encoded payloads
+// The 'extended: true' option allows for rich objects and arrays to be encoded in the URL-encoded format
+app.use(express.urlencoded({ extended: true }));
+
 // Global Middleware for managing user sessions
 app.use(
   session({
