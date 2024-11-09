@@ -1,0 +1,12 @@
+// Handles the GET request for the home page
+// Checks if the user is logged in by looking for 'userID' in the session
+// If logged in, it renders the 'home' page with the user's name from the session
+// If not logged in, it renders the 'home' page without user-specific information
+exports.getHome = (req, res, next) => {
+  console.log(req.sessionID);
+  if (req.session.userID) {
+    res.status(200).render('home', { content: '_empty', userName: req.session.userName });
+  } else {
+    res.status(200).render('home', { content: '_empty' });
+  }
+};
