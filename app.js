@@ -72,6 +72,15 @@ app.use(
   }),
 );
 
+// Global Middleware to make session data (userID and userName) available to all views
+// The userID and userName from the session are stored in res.locals,
+// allowing them to be accessed in any EJS template during rendering.
+app.use((req, res, next) => {
+  res.locals.userID = req.session.userID;
+  res.locals.userName = req.session.userName;
+  next(); // Passes control to the next middleware or route handler
+});
+
 // ROUTES
 // Set up viewRouter to handle requests to the root URL
 app.use('/', viewRouter);
