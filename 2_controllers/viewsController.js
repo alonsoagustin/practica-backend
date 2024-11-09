@@ -10,3 +10,10 @@ exports.getHome = (req, res, next) => {
     res.status(200).render('home', { content: '_empty' });
   }
 };
+
+// Handles the GET request for the login page
+// Renders the login form (content: '_loginForm')
+exports.getLogIn = (req, res, next) => {
+  console.log(req.session);
+  res.status(200).render('home', { content: '_loginForm' });
+};
