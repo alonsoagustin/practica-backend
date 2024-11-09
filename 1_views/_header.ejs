@@ -1,0 +1,11 @@
+<header class="d-flex justify-content-between align-items-center bg-dark p-3 ps-4 pe-4 m-0 container-fluid">
+  <a class="fs-3 text-white" style="text-decoration: none" href="/">NodePOP</a>
+  <div class="d-flex gap-4 flex">
+    <% if(userID) { %>
+    <a class="btn btn-light" href="/users/logout" role="button">Log out</a>
+    <%  } else { %>
+    <a class="btn btn-light" href="/users/login" role="button">Log in</a>
+    <a class="btn btn-outline-light" href="/users/signup" role="button">Sign up</a>
+    <% } %>
+  </div>
+</header>

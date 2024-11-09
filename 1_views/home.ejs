@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/bootstrap-icons.css" />
+  <title>NodePOP</title>
+</head>
+
+<body style="padding: 0.5rem; background-color: rgb(240, 240, 240)">
+  <!-- HEADER -->
+  <%- include("_header.ejs") %>
+
+  <!-- MAIN CONTENT -->
+  <div style="min-height: calc(64px + 64px + 335px); padding: 4rem">
+    <% if(userID) { %>
+    <h1>Welcome back <%= userName %>!</h1>
+    <%- include(content) %>
+    <% } else { %>
+    <%- include(content) %>
+    <% } %>
+  </div>
+
+  <!-- FOOTER -->
+  <%- include('_footer.ejs') %>
+</body>
+
+</html>
