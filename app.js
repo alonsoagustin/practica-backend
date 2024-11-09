@@ -10,6 +10,9 @@ const MongoStore = require('connect-mongo');
 // Import the morgan library to log all requests made to the server in the Express application.
 const logger = require('morgan');
 
+// Import the view route module
+const viewRouter = require('./3_routes/viewRoute');
+
 // Import the user route module
 const userRouter = require('./3_routes/userRoute');
 
@@ -57,7 +60,10 @@ app.use(
   }),
 );
 
-// Routes
+// ROUTES
+// Set up viewRouter to handle requests to the root URL
+app.use('/', viewRouter);
+
 // Set up the '/users' endpoint to handle all user-related requests using userRouter
 app.use('/users', userRouter);
 
