@@ -17,3 +17,9 @@ exports.getLogIn = (req, res, next) => {
   console.log(req.session);
   res.status(200).render('home', { content: '_loginForm' });
 };
+
+// Handles the GET request for the sign-up page
+// Renders the sign-up form (content: '_signupForm')
+exports.getSignUp = (req, res, next) => {
+  res.status(200).render('home', { content: '_signupForm' });
+};
