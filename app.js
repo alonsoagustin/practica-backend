@@ -1,6 +1,9 @@
 // Import the Express library
 const express = require('express');
 
+// Import the 'path' module to handle file paths
+const path = require('path');
+
 // Import the 'express-session' module to handle session management
 const session = require('express-session');
 
@@ -23,7 +26,8 @@ const productRouter = require('./3_routes/productRoute');
 const app = express();
 
 // Set the directory where the application's view templates are stored
-app.set('views', 'views');
+// The 'path.join' method ensures the correct path format, combining the current directory (__dirname) with '1_views'
+app.set('views', path.join(__dirname, '1_views'));
 
 // Set the view engine to EJS, allowing the app to render .ejs template files
 app.set('view engine', 'ejs');
