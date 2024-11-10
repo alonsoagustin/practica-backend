@@ -14,9 +14,8 @@
   <%- include("_header.ejs") %>
 
   <!-- MAIN CONTENT -->
-  <div style="min-height: calc(64px + 64px + 335px); padding: 4rem">
+  <div style="min-height: calc(64px + 64px + 335px); padding: 4rem;">
     <% if(userID) { %>
-    <h1>Welcome back <%= userName %>!</h1>
     <%- include(content) %>
     <% } else { %>
     <%- include(content) %>

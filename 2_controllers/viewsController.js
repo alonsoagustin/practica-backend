@@ -5,7 +5,10 @@
 exports.getHome = (req, res, next) => {
   console.log(req.sessionID);
   if (req.session.userID) {
-    res.status(200).render('home', { content: '_empty', userName: req.session.userName });
+    res.status(200).render('home', {
+      content: '_products',
+      isDeleteMode: req.session.isDeleteMode,
+    });
   } else {
     res.status(200).render('home', { content: '_empty' });
   }
@@ -22,4 +25,8 @@ exports.getLogIn = (req, res, next) => {
 // Renders the sign-up form (content: '_signupForm')
 exports.getSignUp = (req, res, next) => {
   res.status(200).render('home', { content: '_signupForm' });
+};
+
+exports.createProduct = (req, res, next) => {
+  res.status(200).render('home', { content: '_newProduct' });
 };

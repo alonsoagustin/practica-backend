@@ -1,5 +1,6 @@
 // Import the User model to interact with the users collection in the database
 const User = require('./../0_models/userModel');
+const Product = require('./../0_models/productModel');
 
 exports.signup = async (req, res, next) => {
   try {
@@ -11,13 +12,14 @@ exports.signup = async (req, res, next) => {
       passwordConfirm: req.body.passwordConfirm,
     });
 
-    // Store the user ID and name in the session after successful login
+    // Store the user ID, name and products(empty) in the session after successful login
     req.session.userID = newUser._id;
     req.session.userName = newUser.name;
+    req.session.userProducts = [];
 
+    console.log(req.session);
     // Respond with a success status and the newly created user
     // res.status(201).json({
-    //   status: 'success',
     //   message: `Welcome ${newUser.name}`,
     //   data: {
     //     user: newUser,
@@ -25,7 +27,7 @@ exports.signup = async (req, res, next) => {
     // });
 
     //
-    res.redirect('/');
+    res.redirect('/products');
   } catch (error) {
     // Handle errors, such as validation errors
     res.status(400).json({
@@ -42,10 +44,14 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Check if both email and password are provided
-    if (!email || !password) throw new Error('Please provide email and password');
+    if (!email || !password)
+      throw new Error('Please provide email and password');
 
     // Look for the user in the database by email (case-insensitive)
     const user = await User.findOne({ email: email.toLowerCase() });
+
+    //
+    const products = await Product.find({ owner: user._id });
 
     // Verify that the user exists and that the provided password is correct
     if (!user || !(await user.comparePassword(password))) {
@@ -56,6 +62,7 @@ exports.login = async (req, res, next) => {
     // Store the user ID and name in the session after successful login
     req.session.userID = user._id;
     req.session.userName = user.name;
+    req.session.userProducts = products;
 
     // Send a successful response
     // res.status(200).json({ status: 'success', message: `Welcome back ${user.name}` });
@@ -75,14 +82,18 @@ exports.logout = (req, res, next) => {
   // Check if the user is logged in by verifying the existence of userID in session
   if (!req.session.userID) {
     // If no session exists, respond with an error message
-    return res.status(400).json({ status: 'Fail', message: 'No active session to logout from' });
+    return res
+      .status(400)
+      .json({ status: 'Fail', message: 'No active session to logout from' });
   }
 
   // Regenerate the session to ensure that the old session is completely invalidated
   req.session.regenerate((err) => {
     if (err) {
       // If there was an error regenerating the session, return a failure response
-      return res.status(500).json({ status: 'Fail', message: 'Session regeneration failed' });
+      return res
+        .status(500)
+        .json({ status: 'Fail', message: 'Session regeneration failed' });
     }
 
     // Respond with success once the session is successfully regenerated
